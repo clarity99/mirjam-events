@@ -151,6 +151,83 @@
             font-weight: 500;
         }
 
+        .user-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .user-section input {
+            flex: 1;
+            min-width: 250px;
+            padding: 12px 18px;
+            border: 2px solid #667eea;
+            border-radius: 25px;
+            font-size: 1em;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .user-section input:focus {
+            border-color: #764ba2;
+        }
+
+        .user-section button {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .user-section button:hover {
+            transform: scale(1.05);
+        }
+
+        .user-email-display {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .interest-button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 25px;
+            color: #667eea;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .interest-button:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .interest-button.interested {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #764ba2;
+        }
+
+        .event-card.user-interested {
+            border: 3px solid #ffd700;
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.4);
+        }
+
         .month-section {
             margin-bottom: 50px;
         }
@@ -247,6 +324,16 @@
             <p class="subtitle">Upcoming Workshops & Retreats | Spring - Summer 2026</p>
         </header>
 
+        <div class="user-section" id="user-section">
+            <span>📧</span>
+            <input type="email" id="user-email" placeholder="Vnesi svoj email za označevanje dogodkov">
+            <button onclick="saveUserEmail()">Shrani</button>
+            <div id="user-display" style="display: none;">
+                <span class="user-email-display" id="user-email-text"></span>
+                <button onclick="clearUserEmail()" style="background: #ff6b6b; padding: 8px 15px; font-size: 0.9em;">Spremeni</button>
+            </div>
+        </div>
+
         <div id="events-container">
             <div class="loading">Loading events...</div>
         </div>
@@ -269,9 +356,111 @@
 
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+        let userEmail = localStorage.getItem('userEmail');
+        let userInterests = [];
+
+        // Initialize user section
+        function initUserSection() {
+            if (userEmail) {
+                document.getElementById('user-email').style.display = 'none';
+                document.querySelector('.user-section button:first-of-type').style.display = 'none';
+                document.getElementById('user-display').style.display = 'flex';
+                document.getElementById('user-display').style.gap = '15px';
+                document.getElementById('user-display').style.alignItems = 'center';
+                document.getElementById('user-email-text').textContent = userEmail;
+            }
+        }
+
+        function saveUserEmail() {
+            const email = document.getElementById('user-email').value.trim();
+            if (email && email.includes('@')) {
+                userEmail = email;
+                localStorage.setItem('userEmail', email);
+                initUserSection();
+                loadEvents(); // Reload to show user's interests
+            } else {
+                alert('Prosim vnesi veljaven email naslov');
+            }
+        }
+
+        function clearUserEmail() {
+            userEmail = null;
+            localStorage.removeItem('userEmail');
+            document.getElementById('user-email').style.display = 'block';
+            document.getElementById('user-email').value = '';
+            document.querySelector('.user-section button:first-of-type').style.display = 'block';
+            document.getElementById('user-display').style.display = 'none';
+            loadEvents(); // Reload without interests
+        }
+
+        // Fetch user interests
+        async function loadUserInterests() {
+            if (!userEmail) return [];
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('user_interests')
+                    .select('event_id')
+                    .eq('user_email', userEmail);
+
+                if (error) throw error;
+                return data.map(i => i.event_id);
+            } catch (err) {
+                console.error('Error loading interests:', err);
+                return [];
+            }
+        }
+
+        // Toggle interest
+        async function toggleInterest(eventId, button) {
+            if (!userEmail) {
+                alert('Najprej vnesi svoj email naslov');
+                document.getElementById('user-email').focus();
+                return;
+            }
+
+            const isInterested = userInterests.includes(eventId);
+
+            try {
+                if (isInterested) {
+                    // Remove interest
+                    const { error } = await supabaseClient
+                        .from('user_interests')
+                        .delete()
+                        .eq('user_email', userEmail)
+                        .eq('event_id', eventId);
+
+                    if (error) throw error;
+
+                    userInterests = userInterests.filter(id => id !== eventId);
+                    button.textContent = '⭐ Označi zanimanje';
+                    button.classList.remove('interested');
+                    button.closest('.event-card').classList.remove('user-interested');
+                } else {
+                    // Add interest
+                    const { error } = await supabaseClient
+                        .from('user_interests')
+                        .insert({ user_email: userEmail, event_id: eventId });
+
+                    if (error) throw error;
+
+                    userInterests.push(eventId);
+                    button.textContent = '✓ Označeno';
+                    button.classList.add('interested');
+                    button.closest('.event-card').classList.add('user-interested');
+                }
+            } catch (err) {
+                console.error('Error toggling interest:', err);
+                alert('Napaka pri shranjevanju. Prosim poskusi ponovno.');
+            }
+        }
+
         // Fetch and display events
         async function loadEvents() {
             try {
+                // Load user interests first
+                userInterests = await loadUserInterests();
+
                 // Fetch events from Supabase, ordered by date
                 const { data: events, error } = await supabaseClient
                     .from('events')
@@ -367,9 +556,21 @@
                 });
             }
 
+            // Create interest button
+            const interestBtn = document.createElement('button');
+            interestBtn.className = 'interest-button';
+            const isInterested = userInterests.includes(event.id);
+            interestBtn.textContent = isInterested ? '✓ Označeno' : '⭐ Označi zanimanje';
+            if (isInterested) {
+                interestBtn.classList.add('interested');
+                card.classList.add('user-interested');
+            }
+            interestBtn.onclick = () => toggleInterest(event.id, interestBtn);
+
             body.appendChild(location);
             body.appendChild(description);
             body.appendChild(tags);
+            body.appendChild(interestBtn);
 
             card.appendChild(header);
             card.appendChild(body);
@@ -378,7 +579,10 @@
         }
 
         // Load events when page loads
-        window.addEventListener('DOMContentLoaded', loadEvents);
+        window.addEventListener('DOMContentLoaded', () => {
+            initUserSection();
+            loadEvents();
+        });
     </script>
 </body>
 </html>

@@ -44,6 +44,13 @@
             animation: fadeInUp 1s ease-out 0.3s both;
         }
 
+        .loading {
+            text-align: center;
+            color: white;
+            font-size: 1.5em;
+            margin: 50px 0;
+        }
+
         .events-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -144,22 +151,6 @@
             font-weight: 500;
         }
 
-        .event-link {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: 600;
-            transition: transform 0.3s ease;
-        }
-
-        .event-link:hover {
-            transform: scale(1.05);
-        }
-
         .month-section {
             margin-bottom: 50px;
         }
@@ -256,164 +247,8 @@
             <p class="subtitle">Upcoming Workshops & Retreats | Spring - Summer 2026</p>
         </header>
 
-        <!-- March Events -->
-        <div class="month-section">
-            <h2 class="month-header">March 2026</h2>
-            <div class="events-grid">
-                <div class="event-card">
-                    <div class="event-header">
-                        <div class="event-date">6-8 Mar</div>
-                        <div class="event-title">Šta me pokreće</div>
-                        <div class="event-teacher">Thierry Francois</div>
-                    </div>
-                    <div class="event-body">
-                        <div class="event-location">Belgrade, Serbia</div>
-                        <div class="event-description">
-                            Exploring core values through dance and the 5Rhythms map. Thierry is a Gestalt psychotherapist and certified 5Rhythms teacher who works gently with powerful music.
-                        </div>
-                        <div class="event-tags">
-                            <span class="tag">5Rhythms Weekend</span>
-                            <span class="tag">Gestalt Therapy</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="event-card">
-                    <div class="event-header">
-                        <div class="event-date">7 Mar</div>
-                        <div class="event-title">Music is the Healing Force</div>
-                        <div class="event-teacher">Christian de Sousa & Felix Oram</div>
-                    </div>
-                    <div class="event-body">
-                        <div class="event-location">London, UK - The Amadeus</div>
-                        <div class="event-description">
-                            DJ-led deep dance space. Music crafted to meet you in the full spectrum of your being. 2-9pm with livestream option available.
-                        </div>
-                        <div class="event-tags">
-                            <span class="tag">DJ Dance Event</span>
-                            <span class="tag">Livestream Available</span>
-                            <span class="tag">£40-60</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="event-card">
-                    <div class="event-header">
-                        <div class="event-date">13-15 Mar</div>
-                        <div class="event-title">Enotno Polje (Unified Field)</div>
-                        <div class="event-teacher">Erik Iversen</div>
-                    </div>
-                    <div class="event-body">
-                        <div class="event-location">Ljubljana, Slovenia</div>
-                        <div class="event-description">
-                            3-day workshop exploring how to feel and recognize the unified field of your body as you move within the group field. Somatomy™ approach - awakening body parts with playfulness and ease.
-                        </div>
-                        <div class="event-tags">
-                            <span class="tag">3-Day Workshop</span>
-                            <span class="tag">Somatomy</span>
-                            <span class="tag">€195-225</span>
-                            <span class="tag">English</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- April Events -->
-        <div class="month-section">
-            <h2 class="month-header">April 2026</h2>
-            <div class="events-grid">
-                <div class="event-card">
-                    <div class="event-header">
-                        <div class="event-date">11-12 Apr</div>
-                        <div class="event-title">Dance Weekend Workshop</div>
-                        <div class="event-teacher">MC Gala & Adam Barley</div>
-                    </div>
-                    <div class="event-body">
-                        <div class="event-location">Stroud, UK</div>
-                        <div class="event-description">
-                            Special celebration workshop with MC Gala and movement master Adam Barley. Full of life and gratitude after overcoming health challenges.
-                        </div>
-                        <div class="event-tags">
-                            <span class="tag">Weekend Workshop</span>
-                            <span class="tag">Movement</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- June Events -->
-        <div class="month-section">
-            <h2 class="month-header">June 2026</h2>
-            <div class="events-grid">
-                <div class="event-card">
-                    <div class="event-header">
-                        <div class="event-date">19-21 Jun</div>
-                        <div class="event-title">5Rhythms Weekend</div>
-                        <div class="event-teacher">Erik Iversen</div>
-                    </div>
-                    <div class="event-body">
-                        <div class="event-location">Belgrade, Serbia</div>
-                        <div class="event-description">
-                            Erik returns to Belgrade! Founding member of the global 5Rhythms community and one of Gabrielle Roth's first workshop organizers. Master of somatic exploration and embodied presence.
-                        </div>
-                        <div class="event-tags">
-                            <span class="tag">Weekend Workshop</span>
-                            <span class="tag">5Rhythms</span>
-                            <span class="tag">Somatomy</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- September Events -->
-        <div class="month-section">
-            <h2 class="month-header">September 2026</h2>
-            <div class="events-grid">
-                <div class="event-card">
-                    <div class="event-header">
-                        <div class="event-date">4-6 Sep</div>
-                        <div class="event-title">5Rhythms Weekend</div>
-                        <div class="event-teacher">Andrew Holmes</div>
-                    </div>
-                    <div class="event-body">
-                        <div class="event-location">Belgrade, Serbia</div>
-                        <div class="event-description">
-                            Andrew Holmes brings his unique teaching style to Belgrade for a full weekend immersion in the 5Rhythms practice.
-                        </div>
-                        <div class="event-tags">
-                            <span class="tag">Weekend Workshop</span>
-                            <span class="tag">5Rhythms</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- October Events -->
-        <div class="month-section">
-            <h2 class="month-header">October 2026</h2>
-            <div class="events-grid">
-                <div class="event-card">
-                    <div class="event-header">
-                        <div class="event-date">30 Oct - 1 Nov</div>
-                        <div class="event-title">5Rhythms Weekend</div>
-                        <div class="event-teacher">Arjan Bouw</div>
-                    </div>
-                    <div class="event-body">
-                        <div class="event-location">Belgrade, Serbia</div>
-                        <div class="event-description">
-                            Arjan returns to Belgrade! He's been coming back for years and the community embraces him warmly. Also teaching in Ljubljana Oct 16-18.
-                        </div>
-                        <div class="event-tags">
-                            <span class="tag">Weekend Workshop</span>
-                            <span class="tag">5Rhythms</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div id="events-container">
+            <div class="loading">Loading events...</div>
         </div>
 
         <footer>
@@ -423,5 +258,127 @@
             </p>
         </footer>
     </div>
+
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+        // Initialize Supabase client
+        const SUPABASE_URL = 'https://uuiciraccldtencjcjlu.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1aWNpcmFjY2xkdGVuY2pjamx1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAwNDc1ODMsImV4cCI6MjA1NTYyMzU4M30.sb_publishable_9UpO-G8BjIe1QwBETesHHg_2V0JARrG';
+
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Fetch and display events
+        async function loadEvents() {
+            try {
+                // Fetch events from Supabase, ordered by date
+                const { data: events, error } = await supabase
+                    .from('events')
+                    .select('*')
+                    .gte('date_start', new Date().toISOString().split('T')[0]) // Only future events
+                    .order('month_order', { ascending: true })
+                    .order('date_start', { ascending: true });
+
+                if (error) {
+                    console.error('Error fetching events:', error);
+                    document.getElementById('events-container').innerHTML =
+                        '<div class="loading" style="color: #ff6b6b;">Error loading events. Please try again later.</div>';
+                    return;
+                }
+
+                // Group events by month
+                const eventsByMonth = {};
+                events.forEach(event => {
+                    if (!eventsByMonth[event.month_name]) {
+                        eventsByMonth[event.month_name] = [];
+                    }
+                    eventsByMonth[event.month_name].push(event);
+                });
+
+                // Render events
+                const container = document.getElementById('events-container');
+                container.innerHTML = '';
+
+                Object.keys(eventsByMonth).forEach(monthName => {
+                    const monthSection = document.createElement('div');
+                    monthSection.className = 'month-section';
+
+                    const monthHeader = document.createElement('h2');
+                    monthHeader.className = 'month-header';
+                    monthHeader.textContent = monthName;
+                    monthSection.appendChild(monthHeader);
+
+                    const eventsGrid = document.createElement('div');
+                    eventsGrid.className = 'events-grid';
+
+                    eventsByMonth[monthName].forEach(event => {
+                        const card = createEventCard(event);
+                        eventsGrid.appendChild(card);
+                    });
+
+                    monthSection.appendChild(eventsGrid);
+                    container.appendChild(monthSection);
+                });
+
+                if (events.length === 0) {
+                    container.innerHTML = '<div class="loading">No upcoming events at this time.</div>';
+                }
+
+            } catch (err) {
+                console.error('Unexpected error:', err);
+                document.getElementById('events-container').innerHTML =
+                    '<div class="loading" style="color: #ff6b6b;">Error loading events. Please try again later.</div>';
+            }
+        }
+
+        // Create event card HTML
+        function createEventCard(event) {
+            const card = document.createElement('div');
+            card.className = 'event-card';
+
+            const header = document.createElement('div');
+            header.className = 'event-header';
+            header.innerHTML = `
+                <div class="event-date">${event.date_display}</div>
+                <div class="event-title">${event.title}</div>
+                <div class="event-teacher">${event.teacher}</div>
+            `;
+
+            const body = document.createElement('div');
+            body.className = 'event-body';
+
+            const location = document.createElement('div');
+            location.className = 'event-location';
+            location.textContent = event.location;
+
+            const description = document.createElement('div');
+            description.className = 'event-description';
+            description.textContent = event.description;
+
+            const tags = document.createElement('div');
+            tags.className = 'event-tags';
+            if (event.tags && event.tags.length > 0) {
+                event.tags.forEach(tagText => {
+                    const tag = document.createElement('span');
+                    tag.className = 'tag';
+                    tag.textContent = tagText;
+                    tags.appendChild(tag);
+                });
+            }
+
+            body.appendChild(location);
+            body.appendChild(description);
+            body.appendChild(tags);
+
+            card.appendChild(header);
+            card.appendChild(body);
+
+            return card;
+        }
+
+        // Load events when page loads
+        window.addEventListener('DOMContentLoaded', loadEvents);
+    </script>
 </body>
 </html>

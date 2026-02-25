@@ -265,9 +265,10 @@
     <script>
         // Initialize Supabase client
         const SUPABASE_URL = 'https://uuiciraccldtencjcjlu.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1aWNpcmFjY2xkdGVuY2pjamx1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAwNDc1ODMsImV4cCI6MjA1NTYyMzU4M30.sb_publishable_9UpO-G8BjIe1QwBETesHHg_2V0JARrG';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1aWNpcmFjY2xkdGVuY2pjamx1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAwNDc1ODMsImV4cCI6MjA1NTYyMzU4M30.9UpO-G8BjIe1QwBETesHHg_2V0JARrG';
 
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const { createClient } = window.supabase;
+        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         // Fetch and display events
         async function loadEvents() {

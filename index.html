@@ -228,6 +228,22 @@
             box-shadow: 0 10px 40px rgba(255, 215, 0, 0.4);
         }
 
+        .event-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        .event-link:hover {
+            transform: scale(1.05);
+        }
+
         .month-section {
             margin-bottom: 50px;
         }
@@ -554,6 +570,17 @@
                     tag.textContent = tagText;
                     tags.appendChild(tag);
                 });
+            }
+
+            // Create link if available
+            if (event.link) {
+                const link = document.createElement('a');
+                link.className = 'event-link';
+                link.href = event.link;
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+                link.textContent = event.link.startsWith('mailto:') ? '📧 Contact for info' : '🔗 More info / Register';
+                body.appendChild(link);
             }
 
             // Create interest button

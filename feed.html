@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>RSS Feed Generator</title>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// This page generates an RSS feed from Supabase data
+const { createClient } = supabase;
+
+const SUPABASE_URL = 'https://uuiciraccldtencjcjlu.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1aWNpcmFjY2xkdGVuY2pjamx1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA0MDYzNzcsImV4cCI6MjA1NTk4MjM3N30.VwrEm7Y0d3RKJLmgzNOuoY-hBFb7E-Zc2Q1mU9ZWZNQ';
+
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+async function generateRSS() {
+    try {
+        const today = new Date().toISOString().split('T')[0];
+
+        const { data: events, error } = await supabaseClient
+            .from('events')
+            .select('*')
+            .gte('date_start', today)
+            .order('date_start', { ascending: true });
+
+        if (error) throw error;
+
+        // Generate RSS XML
+        const rssItems = events.map(event => {
+            const pubDate = new Date(event.date_start).toUTCString();
+            const title = `${event.title} - ${event.teacher}`;
+            const description = `
+                <![CDATA[
+                <p><strong>Teacher:</strong> ${event.teacher}</p>
+                <p><strong>Date:</strong> ${event.date_display}</p>
+                <p><strong>Location:</strong> ${event.location}</p>
+                ${event.description ? `<p>${event.description}</p>` : ''}
+                ${event.link ? `<p><a href="${event.link}">More info / Register</a></p>` : ''}
+                ]]>
+            `;
+
+            return `
+    <item>
+      <title>${escapeXml(title)}</title>
+      <link>${event.link || 'https://clarity99.github.io/mirjam-events/'}</link>
+      <guid isPermaLink="false">event-${event.id}</guid>
+      <pubDate>${pubDate}</pubDate>
+      <description>${description}</description>
+    </item>`;
+        }).join('\n');
+
+        const rss = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Conscious Dance Events and Other Movement Workshops</title>
+    <link>https://clarity99.github.io/mirjam-events/</link>
+    <description>Upcoming conscious dance events, 5Rhythms workshops, and movement practices</description>
+    <language>en</language>
+    <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
+    <atom:link href="https://clarity99.github.io/mirjam-events/feed.xml" rel="self" type="application/rss+xml"/>
+${rssItems}
+  </channel>
+</rss>`;
+
+        // Set content type and output
+        document.contentType = 'application/rss+xml';
+        document.open();
+        document.write('<pre>' + escapeHtml(rss) + '</pre>');
+        document.close();
+
+        // Also provide download link
+        const blob = new Blob([rss], { type: 'application/rss+xml' });
+        const url = URL.createObjectURL(blob);
+        const downloadLink = document.createElement('a');
+        downloadLink.href = url;
+        downloadLink.download = 'feed.xml';
+        downloadLink.textContent = 'Download RSS Feed';
+        document.body.appendChild(document.createElement('br'));
+        document.body.appendChild(downloadLink);
+
+    } catch (error) {
+        document.write('<p>Error generating RSS feed: ' + error.message + '</p>');
+    }
+}
+
+function escapeXml(unsafe) {
+    return unsafe.replace(/[<>&'"]/g, function (c) {
+        switch (c) {
+            case '<': return '&lt;';
+            case '>': return '&gt;';
+            case '&': return '&amp;';
+            case '\'': return '&apos;';
+            case '"': return '&quot;';
+        }
+    });
+}
+
+function escapeHtml(unsafe) {
+    return unsafe.replace(/[&<>"']/g, function (c) {
+        switch (c) {
+            case '&': return '&amp;';
+            case '<': return '&lt;';
+            case '>': return '&gt;';
+            case '"': return '&quot;';
+            case "'": return '&#039;';
+        }
+    });
+}
+
+generateRSS();
+</script>
+</body>
+</html>

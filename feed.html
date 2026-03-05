@@ -11,9 +11,9 @@
 const { createClient } = supabase;
 
 const SUPABASE_URL = 'https://uuiciraccldtencjcjlu.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1aWNpcmFjY2xkdGVuY2pjamx1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA0MDYzNzcsImV4cCI6MjA1NTk4MjM3N30.VwrEm7Y0d3RKJLmgzNOuoY-hBFb7E-Zc2Q1mU9ZWZNQ';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1aWNpcmFjY2xkdGVuY2pjamx1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwMDY0MTMsImV4cCI6MjA4NzU4MjQxM30.AsPV3cuNIBhKdx7CRr0HTVXz0SzNcCPX6WrsorG_h8c';
 
-const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 async function generateRSS() {
     try {
